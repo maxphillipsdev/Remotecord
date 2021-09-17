@@ -23,12 +23,12 @@ api.use(express.json());
 api.use(express.urlencoded({ extended: true }));
 api.use(morgan("tiny"));
 
-api.get("/guilds", (req, res) => {
+api.get("/api/guilds", (req, res) => {
   const guilds = bot.guilds.cache.map((guild) => guild.id);
   res.send(guilds);
 });
 
-api.get("/guilds/:guildID/channels", (req, res) => {
+api.get("/api/guilds/:guildID/channels", (req, res) => {
   const channels = bot.guilds.cache.get(req.params.guildID)?.channels.cache;
   res.send(
     channels?.map((channel) => {
@@ -40,12 +40,12 @@ api.get("/guilds/:guildID/channels", (req, res) => {
   );
 });
 
-api.post("/guilds/:guildID/channels/:channelID/message", (req, res) => {
+api.post("/api/:channelID/message", (req, res) => {
   // const guild = bot.guilds.cache.get(req.params.guildID)
   const channel = bot.channels.cache.get(req.params.channelID) as TextChannel;
   try {
     channel.send(req.body.message);
-    console.log(JSON.stringify(req.body));
+    console.log(`sdhfjiksadh ${req.body.message}`);
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
